@@ -50,9 +50,9 @@ public class VueControleur extends Application {
 
         Text[][] tabText = new Text[5][5];
 
-        Text affichage = new Text("Grille Drag&Drop");
+        Text affichage = new Text("Lignes");
         affichage.setFont(Font.font("Verdana", 30));
-        affichage.setFill(Color.RED);
+        affichage.setFill(Color.DARKGREEN);
         border.setTop(affichage);
 
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
@@ -113,7 +113,7 @@ public class VueControleur extends Application {
 
         border.setCenter(gPane);
 
-        Scene scene = new Scene(border, Color.LIGHTBLUE);
+        Scene scene = new Scene(border, Color.LIGHTGRAY);
 
         primaryStage.setTitle("Drag & Drop");
         primaryStage.setScene(scene);
