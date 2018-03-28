@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc;
+package mvc.Controller;
 
 import java.util.Observable;
 
@@ -12,7 +12,7 @@ import java.util.Observable;
  *
  * @author fred
  */
-public class Modele extends Observable {
+public class Controller extends Observable {
     
     int lastC, lastR;
     

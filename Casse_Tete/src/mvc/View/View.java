@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc;
+package mvc.View;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -25,22 +25,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+import mvc.Controller.Controller;
 
 /**
  *
  * @author freder
  */
-public class VueControleur extends Application {
+public class View extends Application {
 
     
-    Modele m;
+    Controller m;
     
 
     @Override
     public void start(Stage primaryStage) {
 
         // initialisation du modèle que l'on souhaite utiliser
-        m = new Modele();
+        m = new Controller();
 
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
         BorderPane border = new BorderPane();
