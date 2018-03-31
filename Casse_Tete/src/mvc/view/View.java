@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc.View;
+package mvc.view;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -25,7 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
-import mvc.Controller.Controller;
+import mvc.controller.Controller;
 
 /**
  *

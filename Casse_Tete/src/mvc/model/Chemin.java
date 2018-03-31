@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc.Model.Enumerations;
+package mvc.model;
 
 /**
  *
- * @author jeremy
+ * @author p1503252
  */
-public enum Symboles {
-    VIDE,
-    ROND,
-    CARRE,
-    TRIANGLE
+public class Chemin {
+    
 }

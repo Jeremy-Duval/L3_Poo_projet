@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvc.Model;
+package mvc.model;
 
-import mvc.Model.Enumerations.Liens;
-import mvc.Model.Enumerations.Symboles;
+import mvc.model.enumeration.Liens;
+import mvc.model.enumeration.Symboles;
 
 /**
  * Case de la grille.
