@@ -9,6 +9,7 @@ package mvc.view;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

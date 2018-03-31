@@ -20,8 +20,8 @@ public class Case {
     
     /**
      * Constructeur de base.
-     * @param _ligne int : n° de ligne de la case
-     * @param _colonne int : n° de ligne de la case
+     * @param _ligne int : nÂ° de ligne de la case
+     * @param _colonne int : nÂ° de ligne de la case
      */
     public Case (int _ligne, int _colonne){
         ligne = _ligne;
@@ -31,9 +31,9 @@ public class Case {
     }
     
     /**
-     * Constructeur avec symbole (pour les cases à relier)
-     * @param _ligne int : n° de ligne de la case
-     * @param _colonne int : n° de ligne de la case
+     * Constructeur avec symbole (pour les cases Ã  relier)
+     * @param _ligne int : nÂ° de ligne de la case
+     * @param _colonne int : nÂ° de ligne de la case
      * @param _symbole SYMBOLES (enumeration) : Type de symbole de la case
      */
     public Case (int _ligne, int _colonne, Symboles _symbole){
@@ -45,7 +45,7 @@ public class Case {
     
     /**
      * 
-     * @return int : n° de ligne de la case
+     * @return int : nÂ° de ligne de la case
      */
     public int getLigne(){
         return ligne;
@@ -53,7 +53,7 @@ public class Case {
 
     /**
      * 
-     * @return int : n° de colonne de la case
+     * @return int : nÂ° de colonne de la case
      */
     public int getColonne() {
         return colonne;

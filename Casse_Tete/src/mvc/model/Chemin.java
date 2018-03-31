@@ -10,14 +10,14 @@ import java.util.List;
 
 /**
  * Chemin pour connecter une paire de symbole.
- * Hérite de l'objet ArrayList.
+ * HÃ©rite de l'objet ArrayList.
  * @author Jeremy
  */
 public class Chemin extends ArrayList{
     protected List <Case> path;
     
     /**
-     * Constructeur par défaut.
+     * Constructeur par dÃ©faut.
      */
     public Chemin(){
         super();
@@ -25,9 +25,9 @@ public class Chemin extends ArrayList{
     
     /**
      * Ajoute une case en fin de chemin.
-     * @param e Case : object de type Case à ajouter au chemin
+     * @param e Case : object de type Case Ã  ajouter au chemin
      * @return boolean : true (comme pour une ArrayList)
-     * @throws IllegalArgumentException Exception soulevé si le paramètre n'est pas de type Case
+     * @throws IllegalArgumentException Exception soulevÃ© si le paramÃ¨tre n'est pas de type Case
      */
     @Override
     public boolean add(Object e) throws IllegalArgumentException {
@@ -40,10 +40,10 @@ public class Chemin extends ArrayList{
     }
     
     /**
-     * Ajoute une case à l'index spécifié de ce chemin.
-     * @param i int : index de l'emplacement où ajouter la case en paramètre
-     * @param e Case : object de type Case à ajouter au chemin
-     * @throws IllegalArgumentException Exception soulevé si le paramètre n'est pas de type Case
+     * Ajoute une case Ã  l'index spÃ©cifiÃ© de ce chemin.
+     * @param i int : index de l'emplacement oÃ¹ ajouter la case en paramÃ¨tre
+     * @param e Case : object de type Case Ã  ajouter au chemin
+     * @throws IllegalArgumentException Exception soulevÃ© si le paramÃ¨tre n'est pas de type Case
      */
     @Override
     public void add(int i, Object e) throws IllegalArgumentException {
@@ -56,10 +56,10 @@ public class Chemin extends ArrayList{
     }
     
     /**
-     * Supprime la première occurence de la case en paramètre.
-     * @param e Case : object de type Case à ajouter au chemin
-     * @return boolean : true si l'objet était contenue dans la liste
-     * @throws IllegalArgumentException Exception soulevé si le paramètre n'est pas de type Case
+     * Supprime la premiÃ¨re occurence de la case en paramÃ¨tre.
+     * @param e Case : object de type Case Ã  ajouter au chemin
+     * @return boolean : true si l'objet Ã©tait contenue dans la liste
+     * @throws IllegalArgumentException Exception soulevÃ© si le paramÃ¨tre n'est pas de type Case
      */
     @Override
     public boolean remove(Object e) throws IllegalArgumentException {
@@ -72,10 +72,10 @@ public class Chemin extends ArrayList{
     }
     
     /**
-     * Supprime la première occurence de la case en paramètre.
-     * @param i int : index de l'emplacement de la case à supprimer
-     * @return boolean : true si l'objet était contenue dans la liste
-     * @throws IllegalArgumentException Exception soulevé si le paramètre n'est pas de type Case
+     * Supprime la premiÃ¨re occurence de la case en paramÃ¨tre.
+     * @param i int : index de l'emplacement de la case Ã  supprimer
+     * @return boolean : true si l'objet Ã©tait contenue dans la liste
+     * @throws IllegalArgumentException Exception soulevÃ© si le paramÃ¨tre n'est pas de type Case
      */
     @Override
     public Case remove(int i) throws IllegalArgumentException {
@@ -83,7 +83,7 @@ public class Chemin extends ArrayList{
     }
     
     /**
-     * Vérifie si ce chemin est vide.
+     * VÃ©rifie si ce chemin est vide.
      * @return boolean : true si ce chemin est vide.
      */
     @Override
@@ -100,9 +100,9 @@ public class Chemin extends ArrayList{
     }
 
     /**
-     * Renvoie la case se trouvant à l'index passé en paramètre.
-     * @param i int : index de l'emplacement de la case à renvoyer
-     * @return Case : la case à l'index passé en paramètre
+     * Renvoie la case se trouvant Ã  l'index passÃ© en paramÃ¨tre.
+     * @param i int : index de l'emplacement de la case Ã  renvoyer
+     * @return Case : la case Ã  l'index passÃ© en paramÃ¨tre
      */
     @Override
     public Case get(int i) {
@@ -110,11 +110,11 @@ public class Chemin extends ArrayList{
     }
 
     /**
-     * Remplace une case à l'index passé en pramètre par la case passé en pramètre.
-     * @param i int : index de l'emplacement de la case à remplacer par celle passé en paramètre
-     * @param e Case : object de type Case à ajouter au chemin
-     * @return Case : la case qui viens d'être remplacé
-     * @throws IllegalArgumentException Exception soulevé si le paramètre n'est pas de type Case
+     * Remplace une case Ã  l'index passÃ© en pramÃ¨tre par la case passÃ© en pramÃ¨tre.
+     * @param i int : index de l'emplacement de la case Ã  remplacer par celle passÃ© en paramÃ¨tre
+     * @param e Case : object de type Case Ã  ajouter au chemin
+     * @return Case : la case qui viens d'Ãªtre remplacÃ©
+     * @throws IllegalArgumentException Exception soulevÃ© si le paramÃ¨tre n'est pas de type Case
      */
     @Override
     public Case set(int i, Object e) throws IllegalArgumentException {
