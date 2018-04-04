@@ -24,11 +24,14 @@ public class Grille {
     public Grille(int hauteur, int largeur){
         _hauteur = hauteur;
         _largeur = largeur;
+        _contenu = new Case[_hauteur][_largeur];
         for(int i=0;i<_hauteur;i++){
             for(int j=0;j<_largeur;j++){
                 _contenu[i][j] = new Case(i,j);
             }
         }
+        _contenu[0][0].setSymbole(Symboles.ROND);
+        _contenu[4][0].setSymbole(Symboles.ROND);
     }
 
     /**
@@ -51,7 +54,18 @@ public class Grille {
     public Case[][] getContenu() {
         return _contenu;
     }
-
+    
+    /**
+     * Retourne une case de la grille
+     * @param ligne int : ligne sur laquelle se trouve la case
+     * @param colonne int : colonne sur laquelle se trouve la case
+     * @return Case : la case situé à l'emplacement donné
+     * @author Jérémy
+     */
+    public Case getCase(int ligne, int colonne){
+        return _contenu[ligne][colonne];
+    }
+    
     public void setContenu(Case[][] _contenu) {
         this._contenu = _contenu;
     }

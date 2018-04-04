@@ -15,7 +15,7 @@ import mvc.model.enumeration.Symboles;
 public class Case {
     final protected int ligne;
     final protected int colonne;
-    final Symboles symbole;
+    Symboles symbole;
     Liens lien;
     
     /**
@@ -74,7 +74,15 @@ public class Case {
     public Liens getLien() {
         return lien;
     }
-
+    
+    /**
+     * 
+     * @param symbole SYMBOLES (enumeration) : le type de symbole de la case
+     */
+    public void setSymbole(Symboles symbole) {
+        this.symbole = symbole;
+    }
+    
     /**
      * 
      * @param lien LIENS (enumeration) : le type de lien de la case
@@ -82,6 +90,16 @@ public class Case {
     public void setLien(Liens lien) {
         this.lien = lien;
     }
+
+    /**
+     * Fonction toString pour les tests
+     * @return String : infos de la case
+     */
+    @Override
+    public String toString() {
+        return this.ligne+" - "+this.colonne;
+    }
+    
     
     
     

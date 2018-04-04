@@ -18,7 +18,7 @@ public class Controller extends Observable {
     
     public void startDD(int c, int r) {
         // TODO
-        System.out.println("startDD : " + c + "-" + r);
+        System.out.println("startDD : " + r + "-" + c);
         setChanged();
         notifyObservers();
     }
@@ -28,7 +28,7 @@ public class Controller extends Observable {
         
         // mémoriser le dernier objet renvoyé par parcoursDD pour connaitre la case de relachement
         
-        System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
+        System.out.println("stopDD : " + r + "-" + c + " -> " + lastC + "-" + lastR);
         setChanged();
         notifyObservers();
     }
@@ -37,7 +37,7 @@ public class Controller extends Observable {
         // TODO
         lastC = c;
         lastR = r;
-        System.out.println("parcoursDD : " + c + "-" + r);
+        System.out.println("parcoursDD : " + r + "-" + c);
         setChanged();
         notifyObservers();
     }

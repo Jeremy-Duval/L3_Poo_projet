@@ -27,13 +27,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import mvc.controller.Controller;
+import mvc.model.Grille;
 
 /**
  *
  * @author freder
  */
 public class View extends Application {
-
+    private static final int LARGEUR = 5;
+    private static final int LONGUEUR = 5;
     
     Controller m;
     
@@ -50,7 +52,8 @@ public class View extends Application {
         // permet de placer les diffrents boutons dans une grille
         GridPane gPane = new GridPane();
 
-        Text[][] tabText = new Text[5][5];
+        Grille grid = new Grille(LARGEUR,LONGUEUR);
+        Text[][] tabText = new Text[LARGEUR][LONGUEUR];
 
         Text affichage = new Text("Lignes");
         affichage.setFont(Font.font("Verdana", 30));
@@ -72,7 +75,8 @@ public class View extends Application {
                 final int fColumn = column;
                 final int fRow = row;
 
-                final Text t = new Text(" " + column + "-" + row + " ");
+                //final Text t = new Text(" " + column + "-" + row + " ");
+                final Text t = new Text(grid.getCase(row, column).toString());
                 tabText[column][row] = t;
                 t.setFont(Font.font("Verdana", 25));
                 
