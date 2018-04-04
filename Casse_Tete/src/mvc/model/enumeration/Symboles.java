@@ -10,8 +10,23 @@ package mvc.model.enumeration;
  * @author jeremy
  */
 public enum Symboles {
-    VIDE,
-    ROND,
-    CARRE,
-    TRIANGLE
+    VIDE(""),
+    CAT("assets/img/cat.png"),
+    COW("assets/img/cow.png"),
+    LEAF("assets/img/leaf.png"),
+    PINE("assets/img/pine.png");
+
+    private String imgPath = "";
+
+    /**
+     * Constructeur.
+     * @param path String : path contenu dans le symbole
+     */
+    Symboles(String path) {
+        this.imgPath = path;
+    }
+
+    public String getImgPath() {
+        return this.imgPath;
+    }
 }

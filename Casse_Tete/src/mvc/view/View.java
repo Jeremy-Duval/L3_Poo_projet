@@ -6,6 +6,8 @@
  */
 package mvc.view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
@@ -13,6 +15,8 @@ import static javafx.application.Application.launch;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -34,15 +38,19 @@ import mvc.model.Grille;
  * @author freder
  */
 public class View extends Application {
-    private static final int LARGEUR = 5;
-    private static final int LONGUEUR = 5;
+    private static final int LARGEUR_GRID = 5;
+    private static final int LONGUEUR_GRID = 5;
+    private static final int SIZE_CELL = 50;
     
     Controller m;
     
 
     @Override
-    public void start(Stage primaryStage) {
-
+    public void start(Stage primaryStage) throws FileNotFoundException {
+        String symbolPath;
+        Image imgSymbol;
+        ImageView imgSymbView;
+        
         // initialisation du modèle que l'on souhaite utiliser
         m = new Controller();
 
@@ -52,8 +60,8 @@ public class View extends Application {
         // permet de placer les diffrents boutons dans une grille
         GridPane gPane = new GridPane();
 
-        Grille grid = new Grille(LARGEUR,LONGUEUR);
-        Text[][] tabText = new Text[LARGEUR][LONGUEUR];
+        Grille grid = new Grille(LARGEUR_GRID,LONGUEUR_GRID);
+        Text[][] tabText = new Text[LARGEUR_GRID][LONGUEUR_GRID];
 
         Text affichage = new Text("Lignes");
         affichage.setFont(Font.font("Verdana", 30));
@@ -110,8 +118,19 @@ public class View extends Application {
                         
                     }
                 });
-
-                gPane.add(tabText[column][row], column, row);
+                
+                symbolPath = grid.getCase(row, column).getSymbole().getImgPath();
+                if(!"".equals(symbolPath)){
+                    //creation du symbole 
+                    imgSymbol = new Image(new FileInputStream(symbolPath));
+                    imgSymbView = new ImageView(imgSymbol);
+                    imgSymbView.setFitHeight(SIZE_CELL);
+                    imgSymbView.setFitWidth(SIZE_CELL);
+                    
+                    gPane.add(imgSymbView, column, row);
+                } else {
+                    gPane.add(tabText[column][row], column, row);
+                }
             }
         }
 

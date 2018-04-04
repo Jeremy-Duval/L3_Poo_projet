@@ -30,8 +30,8 @@ public class Grille {
                 _contenu[i][j] = new Case(i,j);
             }
         }
-        _contenu[0][0].setSymbole(Symboles.ROND);
-        _contenu[4][0].setSymbole(Symboles.ROND);
+        _contenu[0][0].setSymbole(Symboles.COW);
+        _contenu[4][0].setSymbole(Symboles.COW);
     }
 
     /**
