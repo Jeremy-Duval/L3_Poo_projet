@@ -94,13 +94,11 @@ public class View extends Application {
                 //creation de la grille d'images
                 final ImageView imV;
                 symbolPath = grid.getCase(row, column).getSymbole().getImgPath();
-                if (!"".equals(symbolPath)) {
-                    //creation du symbole 
-                    imgSymbol = new Image(new FileInputStream(symbolPath));
-                    imV = new ImageView(imgSymbol);
-                } else {
-                    imV = new ImageView();
-                }
+                
+                //creation du symbole 
+                imgSymbol = new Image(new FileInputStream(symbolPath));
+                imV = new ImageView(imgSymbol);
+               
                 imV.setFitHeight(SIZE_CELL);
                 imV.setFitWidth(SIZE_CELL);
                 imgView[column][row] = imV;

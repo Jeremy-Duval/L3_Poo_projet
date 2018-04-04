@@ -10,7 +10,7 @@ package mvc.model.enumeration;
  * @author jeremy
  */
 public enum Symboles {
-    VIDE(""),
+    VIDE("assets/img/round.png"),
     CAT("assets/img/cat.png"),
     COW("assets/img/cow.png"),
     LEAF("assets/img/leaf.png"),
