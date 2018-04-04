@@ -5,6 +5,8 @@
  */
 package mvc.model;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import mvc.model.enumeration.Liens;
 import mvc.model.enumeration.Symboles;
 
@@ -99,6 +101,7 @@ public class Case {
     public String toString() {
         return this.ligne+" - "+this.colonne;
     }
+
     
     
     

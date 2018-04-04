@@ -31,7 +31,7 @@ public class Grille {
             }
         }
         _contenu[0][0].setSymbole(Symboles.COW);
-        _contenu[4][0].setSymbole(Symboles.COW);
+        _contenu[4][2].setSymbole(Symboles.COW);
     }
 
     /**
