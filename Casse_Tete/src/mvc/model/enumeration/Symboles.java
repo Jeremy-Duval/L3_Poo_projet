@@ -10,11 +10,11 @@ package mvc.model.enumeration;
  * @author jeremy
  */
 public enum Symboles {
-    VIDE("assets/img/round.png"),
-    CAT("assets/img/cat.png"),
-    COW("assets/img/cow.png"),
-    LEAF("assets/img/leaf.png"),
-    PINE("assets/img/pine.png");
+    VIDE("assets/img/empty.png"),
+    CAT("assets/img/cat_c.png"),
+    COW("assets/img/cow_c.png"),
+    LEAF("assets/img/leaf_c.png"),
+    PINE("assets/img/pine_c.png");
 
     private String imgPath = "";
 

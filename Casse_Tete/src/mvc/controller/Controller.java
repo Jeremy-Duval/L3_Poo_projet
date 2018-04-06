@@ -28,7 +28,7 @@ public class Controller extends Observable {
         
         // mémoriser le dernier objet renvoyé par parcoursDD pour connaitre la case de relachement
         
-        System.out.println("stopDD : " + r + "-" + c + " -> " + lastC + "-" + lastR);
+        System.out.println("stopDD : " + r + "-" + c + " -> " + lastR + "-" + lastC);
         setChanged();
         notifyObservers();
     }
