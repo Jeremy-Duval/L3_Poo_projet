@@ -105,19 +105,20 @@ public class View extends Application {
                 
                 imV.setOnDragDetected(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent event) {
-                        Dragboard db = imV.startDragAndDrop(TransferMode.MOVE);
-                        ClipboardContent content = new ClipboardContent();
-                        content.putString(""); // non utilisé actuellement
-                        db.setContent(content);
-                        event.consume();
-                        m.startDD(fColumn, fRow);
-                        
+                        if(grid.getCase(fRow, fColumn).getSymbole()!=Symboles.VIDE){
+                            Dragboard db = imV.startDragAndDrop(TransferMode.MOVE);
+                            ClipboardContent content = new ClipboardContent();
+                            content.putString(""); // non utilisé actuellement
+                            db.setContent(content);
+                            event.consume();
+                            m.startDD(fColumn, fRow, grid.getCase(fRow, fColumn));
+                        }
                     }
                 });
 
                 imV.setOnDragEntered(new EventHandler<DragEvent>() {
                     public void handle(DragEvent event) {
-                        m.parcoursDD(fColumn, fRow);
+                        m.parcoursDD(fColumn, fRow, grid.getCase(fRow, fColumn));
                         event.consume();
                     }
                 });
@@ -126,7 +127,7 @@ public class View extends Application {
                     public void handle(DragEvent event) {
 
                         // attention, le setOnDragDone est déclenché par la source du Drag&Drop
-                        m.stopDD(fColumn, fRow);
+                        m.stopDD(fColumn, fRow, grid.getCase(fRow, fColumn));
 
                     }
                 });

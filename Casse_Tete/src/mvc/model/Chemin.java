@@ -14,7 +14,6 @@ import java.util.List;
  * @author Jeremy
  */
 public class Chemin extends ArrayList{
-    protected List <Case> path;
     
     /**
      * Constructeur par défaut.
