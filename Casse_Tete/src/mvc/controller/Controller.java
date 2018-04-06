@@ -26,11 +26,20 @@ public class Controller extends Observable {
     int lastC, lastR;
     Symboles lastSymb;
 
+    /**
+     * Constructeur.
+     */
     public Controller() {
         this.pathList = new Hashtable<Symboles,Chemin>();
         lastSymb = Symboles.VIDE;
     }
     
+    /**
+     * Initialise le chemin et notify du début du drag an drop.
+     * @param c int : colonne de la case
+     * @param r int : ligne de la case
+     * @param cell Case : case de départ
+     */
     public void startDD(int c, int r, Case cell) {
         ListIterator<Chemin> it;
         boolean registered;
@@ -58,6 +67,11 @@ public class Controller extends Observable {
         notifyObservers();
     }
     
+    /**
+     * Supprime le chemin si celui ci est incorect et notify de la fin du drag an drop.
+     * @param c int : colonne de la case
+     * @param r int : ligne de la case
+     */
     public void stopDD(int c, int r) {
         Chemin chemin;
         Case lastCase;
@@ -89,8 +103,20 @@ public class Controller extends Observable {
         notifyObservers();
     }
     
+    /**
+     * Actualise le chemin et notify du changement dans le drag an drop.
+     * @param c int : colonne de la case
+     * @param r int : ligne de la case
+     * @param cell Case : case courante
+     */
     public void parcoursDD(int c, int r, Case cell) {
-        // TODO
+        // TODO :
+            //Ajout de la case dans le bon chemin (symbole vide ou symbole == lastSymb)
+                //Verif que la précédente ne comporte pas un symbole (pour ne pas traverser un case == lastSymb)
+                //Verif case pas déjà dans un autre chemin
+                //Verif case touche précédente (une seule coordonnée ++ ou --)
+                //changement lastC et lastR, ajout et actualisation de lien de la case (suivant position case precedente) que si tout correct
+            //Look si chemin final ok (cf stopDD)
         lastC = c;
         lastR = r;
         System.out.println("parcoursDD : " + r + "-" + c + " Symbole : " + cell.getSymbole());
