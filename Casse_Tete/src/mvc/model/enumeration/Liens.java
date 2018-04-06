@@ -10,11 +10,25 @@ package mvc.model.enumeration;
  * @author jeremy
  */
 public enum Liens {
-    VIDE,
-    HORIZONTAL,
-    VERTICAL,
-    ANGLE_INF_DROIT,
-    ANGLE_INF_GAUCHE,
-    ANGLE_SUP_DROIT,
-    ANGLE_SUP_GAUCHE
+    VIDE("assets/img/empty.png"),
+    HORIZONTAL("assets/img/liens/l_hor.png"),
+    VERTICAL("assets/img/liens/l_ver.png"),
+    ANGLE_INF_DROIT("assets/img/liens/l_adb.png"),
+    ANGLE_INF_GAUCHE("assets/img/liens/l_agb.png"),
+    ANGLE_SUP_DROIT("assets/img/liens/l_adh.png"),
+    ANGLE_SUP_GAUCHE("assets/img/liens/l_agh.png");
+    
+    private String imgPath = "";
+
+    /**
+     * Constructeur.
+     * @param path String : path contenu dans le symbole
+     */
+    Liens(String path) {
+        this.imgPath = path;
+    }
+
+    public String getImgPath() {
+        return this.imgPath;
+    }
 }
