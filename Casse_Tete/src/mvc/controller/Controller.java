@@ -24,9 +24,11 @@ import mvc.model.enumeration.Symboles;
 public class Controller extends Observable {
     Hashtable<Symboles,Chemin> pathList;
     int lastC, lastR;
+    Symboles lastSymb;
 
     public Controller() {
         this.pathList = new Hashtable<Symboles,Chemin>();
+        lastSymb = Symboles.VIDE;
     }
     
     public void startDD(int c, int r, Case cell) {
@@ -39,7 +41,7 @@ public class Controller extends Observable {
         Set keys = pathList.keySet();
         Iterator itr = keys.iterator();
         while((itr.hasNext())&&(!registered)){
-            if(itr.next()==cell.getSymbole()){
+            if((Symboles)itr.next()==cell.getSymbole()){
                 registered = true;
             }
         }
@@ -48,6 +50,7 @@ public class Controller extends Observable {
             Chemin ch = new Chemin();
             ch.add(cell);
             pathList.put(cell.getSymbole(), ch);
+            lastSymb=cell.getSymbole();
             System.out.println("Key : "+cell.getSymbole());
         }
         
@@ -55,12 +58,33 @@ public class Controller extends Observable {
         notifyObservers();
     }
     
-    public void stopDD(int c, int r, Case cell) {
-        // TODO
-        
+    public void stopDD(int c, int r) {
+        Chemin chemin;
+        Case lastCase;
         // mémoriser le dernier objet renvoyé par parcoursDD pour connaitre la case de relachement
+        System.out.println("stopDD : " + r + "-" + c + " -> " + lastR + "-" + lastC);
         
-        System.out.println("stopDD : " + r + "-" + c + " -> " + lastR + "-" + lastC + " Symbole : " + cell.getSymbole());
+        //si l'on s'arrête sur une case vide, de mauvais symbole, ou sur la case d'origine : on supprime le chemin
+        chemin = pathList.get(lastSymb);
+        lastCase = chemin.get(chemin.size()-1);
+        if((lastCase.getSymbole()==Symboles.VIDE)||(lastCase.getSymbole()!=lastSymb)||(lastCase==chemin.get(0))){
+            pathList.remove(lastSymb);
+            System.out.println("Erase");
+        }
+        
+        //******************Test : affichage de toutes les cases de tout les chemins********************
+        Set keys = pathList.keySet();
+        Iterator itr = keys.iterator();
+        while((itr.hasNext())){
+            Symboles symb = (Symboles) itr.next();
+            Chemin ch = pathList.get(symb);
+            System.out.println("Chemin "+symb+" : ");
+            Iterator itr2 = ch.iterator();
+            while (itr2.hasNext()) {
+                System.out.println(itr2.next());
+            }
+        }
+        
         setChanged();
         notifyObservers();
     }

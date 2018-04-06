@@ -127,7 +127,7 @@ public class View extends Application {
                     public void handle(DragEvent event) {
 
                         // attention, le setOnDragDone est déclenché par la source du Drag&Drop
-                        m.stopDD(fColumn, fRow, grid.getCase(fRow, fColumn));
+                        m.stopDD(fColumn, fRow);
 
                     }
                 });
