@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import mvc.controller.Controller;
 import mvc.model.Grille;
+import mvc.model.enumeration.Liens;
 import mvc.model.enumeration.Symboles;
 
 /**
@@ -77,12 +78,60 @@ public class View extends Application {
 
             @Override
             public void update(Observable o, Object arg) {
-                // TODO
+                Liens cellLink;
+                String linkPath;
+                Image imgLink;
+                
+                System.out.println("MAJ");
+                //MAJ des liens
+                for (int column = 0; column < LARGEUR_GRID; column++) {
+                    for (int row = 0; row < LONGUEUR_GRID; row++) {
+                        final ImageView imV;
+                        
+                        cellLink = grid.getCase(row, column).getLien();
+                        //System.out.println(grid.getCase(row, column) + " - " + cellLink);
+                        linkPath = Liens.VIDE.getImgPath();
+                        try{
+                            switch(cellLink){
+                                case ANGLE_INF_DROIT :
+                                    linkPath = Liens.ANGLE_INF_DROIT.getImgPath();
+                                    break;
+                                case ANGLE_INF_GAUCHE :
+                                    linkPath = Liens.ANGLE_INF_GAUCHE.getImgPath();
+                                    break;
+                                case ANGLE_SUP_DROIT :
+                                    linkPath = Liens.ANGLE_SUP_DROIT.getImgPath();
+                                    break;
+                                case ANGLE_SUP_GAUCHE :
+                                    linkPath = Liens.ANGLE_SUP_GAUCHE.getImgPath();
+                                    break;
+                                case HORIZONTAL :
+                                    linkPath = Liens.HORIZONTAL.getImgPath();
+                                    break;
+                                case VERTICAL :
+                                    linkPath = Liens.VERTICAL.getImgPath();
+                                    break;
+                                default:
+                                    break;
+
+                            }
+                            //System.out.println(linkPath);
+                            imgLink = new Image(new FileInputStream(linkPath));
+                            imV = new ImageView(imgLink);
+                            imV.setFitHeight(SIZE_CELL);
+                            imV.setFitWidth(SIZE_CELL);
+                            imgView[column][row] = imV;
+                            
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }//end FOR
             }
         });
 
-        for (int column = 0; column < 5; column++) {
-            for (int row = 0; row < 5; row++) {
+        for (int column = 0; column < LARGEUR_GRID; column++) {
+            for (int row = 0; row < LONGUEUR_GRID; row++) {
 
                 final int fColumn = column;
                 final int fRow = row;
@@ -134,9 +183,9 @@ public class View extends Application {
                 gPane.add(imgView[column][row], column, row);
             }
         }
-
+        
         gPane.setGridLinesVisible(true);
-
+        
         border.setCenter(gPane);
 
         Scene scene = new Scene(border, Color.CORAL);
