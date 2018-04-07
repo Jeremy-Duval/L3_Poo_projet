@@ -80,53 +80,53 @@ public class View extends Application {
             public void update(Observable o, Object arg) {
                 Liens cellLink;
                 String linkPath;
-                Image imgLink;
                 
                 System.out.println("MAJ");
                 //MAJ des liens
                 for (int column = 0; column < LARGEUR_GRID; column++) {
                     for (int row = 0; row < LONGUEUR_GRID; row++) {
-                        final ImageView imV;
-                        
-                        cellLink = grid.getCase(row, column).getLien();
-                        //System.out.println(grid.getCase(row, column) + " - " + cellLink);
-                        linkPath = Liens.VIDE.getImgPath();
-                        try{
-                            switch(cellLink){
-                                case ANGLE_INF_DROIT :
-                                    linkPath = Liens.ANGLE_INF_DROIT.getImgPath();
-                                    break;
-                                case ANGLE_INF_GAUCHE :
-                                    linkPath = Liens.ANGLE_INF_GAUCHE.getImgPath();
-                                    break;
-                                case ANGLE_SUP_DROIT :
-                                    linkPath = Liens.ANGLE_SUP_DROIT.getImgPath();
-                                    break;
-                                case ANGLE_SUP_GAUCHE :
-                                    linkPath = Liens.ANGLE_SUP_GAUCHE.getImgPath();
-                                    break;
-                                case HORIZONTAL :
-                                    linkPath = Liens.HORIZONTAL.getImgPath();
-                                    break;
-                                case VERTICAL :
-                                    linkPath = Liens.VERTICAL.getImgPath();
-                                    break;
-                                default:
-                                    break;
+                        if(grid.getCase(row, column).getSymbole()==Symboles.VIDE){
+                            cellLink = grid.getCase(row, column).getLien();
+                            //System.out.println(grid.getCase(row, column) + " - " + cellLink);
+                            linkPath = Liens.VIDE.getImgPath();
+                            try{
+                                switch(cellLink){
+                                    case ANGLE_INF_DROIT :
+                                        linkPath = Liens.ANGLE_INF_DROIT.getImgPath();
+                                        break;
+                                    case ANGLE_INF_GAUCHE :
+                                        linkPath = Liens.ANGLE_INF_GAUCHE.getImgPath();
+                                        break;
+                                    case ANGLE_SUP_DROIT :
+                                        linkPath = Liens.ANGLE_SUP_DROIT.getImgPath();
+                                        break;
+                                    case ANGLE_SUP_GAUCHE :
+                                        linkPath = Liens.ANGLE_SUP_GAUCHE.getImgPath();
+                                        break;
+                                    case HORIZONTAL :
+                                        linkPath = Liens.HORIZONTAL.getImgPath();
+                                        break;
+                                    case VERTICAL :
+                                        linkPath = Liens.VERTICAL.getImgPath();
+                                        break;
+                                    default:
+                                        break;
 
+                                }
+                                Image imgLink = new Image(new FileInputStream(linkPath));
+                                imgView[column][row].setImage(imgLink);
+                                ((ImageView)gPane.getChildren().get(column*LONGUEUR_GRID+row)).setImage(imgLink);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
                             }
-                            //System.out.println(linkPath);
-                            imgLink = new Image(new FileInputStream(linkPath));
-                            imV = new ImageView(imgLink);
-                            imV.setFitHeight(SIZE_CELL);
-                            imV.setFitWidth(SIZE_CELL);
-                            imgView[column][row] = imV;
-                            
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
+                        }//end if
                     }
                 }//end FOR
+                
+                //TODO :
+                    //appel fonction dans controller pour vérifier victoire :
+                        //vérif toute cases avec des liens
+                        //vérif nb_chemin = nb_symboles/2
             }
         });
 
@@ -192,6 +192,7 @@ public class View extends Application {
 
         primaryStage.setTitle(TITLE);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

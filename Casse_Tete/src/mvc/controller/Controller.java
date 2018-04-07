@@ -20,7 +20,7 @@ import mvc.model.enumeration.Symboles;
 
 /**
  *
- * @author fred
+ * @author fred (base), modifié par Jérémy
  */
 public class Controller extends Observable {
     Hashtable<Symboles,Chemin> pathList;
@@ -151,24 +151,24 @@ public class Controller extends Observable {
                     } else if(lastCell.getLien()==Liens.VERTICAL){
                         if(cell.getColonne()-lastCell.getColonne()==1){
                             if(chemin.get(chemin.size()-2).getLigne()-lastCell.getLigne()==1){
-                                lastCell.setLien(Liens.ANGLE_SUP_DROIT);
+                                lastCell.setLien(Liens.ANGLE_INF_DROIT);
                             } else {
-                                lastCell.setLien(Liens.ANGLE_SUP_GAUCHE);
+                                lastCell.setLien(Liens.ANGLE_SUP_DROIT);
                             }
                         } else if(cell.getColonne()-lastCell.getColonne()==-1){
                             if(chemin.get(chemin.size()-2).getLigne()-lastCell.getLigne()==1){
-                                lastCell.setLien(Liens.ANGLE_INF_DROIT);
-                            } else {
                                 lastCell.setLien(Liens.ANGLE_INF_GAUCHE);
+                            } else {
+                                lastCell.setLien(Liens.ANGLE_SUP_GAUCHE);
                             }
                         }
                         
                     }
                     
                     if(absDiffCol==1){
-                        cell.setLien(Liens.VERTICAL);
-                    } else {
                         cell.setLien(Liens.HORIZONTAL);
+                    } else {
+                        cell.setLien(Liens.VERTICAL);
                     }
                     chemin.add(cell);
                     
@@ -186,6 +186,7 @@ public class Controller extends Observable {
     /**
      * Reinitialise les liens des case du chemin à VIDE
      * @param path Chemin : chemin pour lequel réinitialiser le lien des cases à VIDE.
+     * @author Jérémy
      */
     private void reInitPathLink(Chemin path){
         Iterator itr = path.iterator();

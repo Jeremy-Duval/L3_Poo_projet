@@ -9,7 +9,7 @@ import mvc.model.enumeration.Symboles;
 
 /**
  *
- * @author p1503252
+ * @author Alexis
  */
 public class Grille {
     private final int _hauteur;
