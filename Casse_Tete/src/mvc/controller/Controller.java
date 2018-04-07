@@ -14,6 +14,7 @@ import java.util.Observable;
 import java.util.Set;
 import mvc.model.Case;
 import mvc.model.Chemin;
+import mvc.model.enumeration.Liens;
 import mvc.model.enumeration.Symboles;
 
 
@@ -60,6 +61,8 @@ public class Controller extends Observable {
             ch.add(cell);
             pathList.put(cell.getSymbole(), ch);
             lastSymb=cell.getSymbole();
+            lastC = c;
+            lastR = r;
             System.out.println("Key : "+cell.getSymbole());
         }
         
@@ -74,14 +77,15 @@ public class Controller extends Observable {
      */
     public void stopDD(int c, int r) {
         Chemin chemin;
-        Case lastCase;
+        Case lastCell;
         // mémoriser le dernier objet renvoyé par parcoursDD pour connaitre la case de relachement
         System.out.println("stopDD : " + r + "-" + c + " -> " + lastR + "-" + lastC);
         
         //si l'on s'arrête sur une case vide, de mauvais symbole, ou sur la case d'origine : on supprime le chemin
         chemin = pathList.get(lastSymb);
-        lastCase = chemin.get(chemin.size()-1);
-        if((lastCase.getSymbole()==Symboles.VIDE)||(lastCase.getSymbole()!=lastSymb)||(lastCase==chemin.get(0))){
+        lastCell = chemin.get(chemin.size()-1);
+        if((lastCell.getSymbole()==Symboles.VIDE)||(lastCell.getSymbole()!=lastSymb)||(lastCell==chemin.get(0))){
+            this.reInitPathLink(chemin);
             pathList.remove(lastSymb);
             System.out.println("Erase");
         }
@@ -110,19 +114,85 @@ public class Controller extends Observable {
      * @param cell Case : case courante
      */
     public void parcoursDD(int c, int r, Case cell) {
-        // TODO :
-            //Ajout de la case dans le bon chemin (symbole vide ou symbole == lastSymb)
-                //Verif que la précédente ne comporte pas un symbole (pour ne pas traverser un case == lastSymb)
-                //Verif case pas déjà dans un autre chemin
-                //Verif case touche précédente (une seule coordonnée ++ ou --)
-                //changement lastC et lastR, ajout et actualisation de lien de la case (suivant position case precedente) que si tout correct
-            //Look si chemin final ok (cf stopDD)
-        lastC = c;
-        lastR = r;
+        Chemin chemin;
+        Case lastCell;
+        int absDiffCol, absDiffLig;
+        
+        chemin = pathList.get(lastSymb);
+        lastCell = chemin.get(chemin.size()-1);
+        /*on vérifie que :
+            - la case n'a pas de symbole ou son symbole == lastSymb
+            - la précédente n'a pas de symbole (pour ne pas traverser un case == lastSymb) sauf si c'est la premiere
+        */
+        if(((cell.getSymbole()==Symboles.VIDE)||(cell.getSymbole()==lastSymb))&&((lastCell.getSymbole()==Symboles.VIDE)||(chemin.size()<=1)))
+        {
+            //on vérifie que la case touche précédente (une seule coordonnée ++ ou --)
+            absDiffCol = Math.abs(cell.getColonne()-lastCell.getColonne());
+            absDiffLig = Math.abs(cell.getLigne()-lastCell.getLigne());
+            if(((absDiffCol==1)&&(absDiffLig==0))||((absDiffCol==0)&&(absDiffLig==1))){
+                //on vérifie que la case n'est pas déjà dans un autre chemin (et donc n'a pas déjà un lien)
+                if(cell.getLien()==Liens.VIDE){
+                    //on met a jour le symbole de la case précédente si il doit se changer en angle
+                    if(lastCell.getLien()==Liens.HORIZONTAL){
+                        if(cell.getLigne()-lastCell.getLigne()==1){
+                            if(chemin.get(chemin.size()-2).getColonne()-lastCell.getColonne()==1){
+                                lastCell.setLien(Liens.ANGLE_INF_DROIT);
+                            } else {
+                                lastCell.setLien(Liens.ANGLE_INF_GAUCHE);
+                            }
+                        } else if(cell.getLigne()-lastCell.getLigne()==-1){
+                            if(chemin.get(chemin.size()-2).getColonne()-lastCell.getColonne()==1){
+                                lastCell.setLien(Liens.ANGLE_SUP_DROIT);
+                            } else {
+                                lastCell.setLien(Liens.ANGLE_SUP_GAUCHE);
+                            }
+                        }
+                        
+                    } else if(lastCell.getLien()==Liens.VERTICAL){
+                        if(cell.getColonne()-lastCell.getColonne()==1){
+                            if(chemin.get(chemin.size()-2).getLigne()-lastCell.getLigne()==1){
+                                lastCell.setLien(Liens.ANGLE_SUP_DROIT);
+                            } else {
+                                lastCell.setLien(Liens.ANGLE_SUP_GAUCHE);
+                            }
+                        } else if(cell.getColonne()-lastCell.getColonne()==-1){
+                            if(chemin.get(chemin.size()-2).getLigne()-lastCell.getLigne()==1){
+                                lastCell.setLien(Liens.ANGLE_INF_DROIT);
+                            } else {
+                                lastCell.setLien(Liens.ANGLE_INF_GAUCHE);
+                            }
+                        }
+                        
+                    }
+                    
+                    if(absDiffCol==1){
+                        cell.setLien(Liens.VERTICAL);
+                    } else {
+                        cell.setLien(Liens.HORIZONTAL);
+                    }
+                    chemin.add(cell);
+                    
+                    lastC = c;
+                    lastR = r;
+                }
+            }
+        }
+        
         System.out.println("parcoursDD : " + r + "-" + c + " Symbole : " + cell.getSymbole());
         setChanged();
         notifyObservers();
     }
    
+    /**
+     * Reinitialise les liens des case du chemin à VIDE
+     * @param path Chemin : chemin pour lequel réinitialiser le lien des cases à VIDE.
+     */
+    private void reInitPathLink(Chemin path){
+        Iterator itr = path.iterator();
+        while (itr.hasNext()) {
+            Case cell = (Case) itr.next();
+            cell.setLien(Liens.VIDE);
+        }
+    }
 
 }
