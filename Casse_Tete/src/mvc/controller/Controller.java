@@ -263,6 +263,7 @@ public class Controller extends Observable {
         this.lastLevel++;
         if(this.lastLevel>5){
             this.lastLevel=0;
+            return 6;
         }
         
         return this.lastLevel;
