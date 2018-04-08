@@ -5,11 +5,12 @@
  */
 package mvc.model;
 
+import mvc.model.enumeration.Liens;
 import mvc.model.enumeration.Symboles;
 
 /**
  *
- * @author Alexis
+ * @author Alexis, modifiée et debuguer par Jérémy
  */
 public class Grille {
     private final int _hauteur;
@@ -60,25 +61,39 @@ public class Grille {
      * @param ligne int : ligne sur laquelle se trouve la case
      * @param colonne int : colonne sur laquelle se trouve la case
      * @return Case : la case situé à l'emplacement donné
-     * @author Jérémy
      */
     public Case getCase(int ligne, int colonne){
         return _contenu[ligne][colonne];
     }
     
+    /**
+     * 
+     * @param _contenu Case[][] : nouvelle grille
+     */
     public void setContenu(Case[][] _contenu) {
         this._contenu = _contenu;
     }
     
-    
+    /**
+     * Détermine si la grille est pleine.
+     * @return boolean : true si la grille est pleine, false sinon
+     */
     public boolean isFull(){
-        boolean isFull = true;
-        for(int i=0;i<_hauteur;i++){
-            for(int j=0;j<_largeur;j++){
-                if(_contenu[i][j].getSymbole() == Symboles.VIDE ){
-                    isFull = false;
+        int column, row;
+        boolean isFull;
+        
+        isFull = true;
+        column = 0;
+        while((column < _largeur)&&(isFull)){
+            row = 0;
+            while((row < _hauteur)&&(isFull)){
+                //si la case n'a pas de symbole et de lien, c'est que la grille n'est pas vide
+                if((_contenu[row][column].getSymbole()==Symboles.VIDE)&&(_contenu[row][column].getLien()==Liens.VIDE)){
+                    isFull=false;
                 }
+                row++;
             }
+            column++;
         }
         return isFull;
     }

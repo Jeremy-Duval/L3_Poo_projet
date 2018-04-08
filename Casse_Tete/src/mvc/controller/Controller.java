@@ -14,6 +14,7 @@ import java.util.Observable;
 import java.util.Set;
 import mvc.model.Case;
 import mvc.model.Chemin;
+import mvc.model.Grille;
 import mvc.model.enumeration.Liens;
 import mvc.model.enumeration.Symboles;
 
@@ -194,6 +195,40 @@ public class Controller extends Observable {
             Case cell = (Case) itr.next();
             cell.setLien(Liens.VIDE);
         }
+    }
+    
+    public boolean victory(Grille grid, int largeurGrille, int longueurGrille){
+        boolean gameWin;
+        int column, row, nbSymboles;
+        
+        nbSymboles = 0;
+        gameWin = true;
+        column = 0;
+        //On vérifie que la grille est pleine
+        while((column < largeurGrille)&&(gameWin)){
+            row = 0;
+            while((row < longueurGrille)&&(gameWin)){
+                //si la case n'a pas de symbole et de lien, c'est que la grille n'est pas vide
+                if((grid.getCase(row, column).getSymbole()==Symboles.VIDE)&&(grid.getCase(row, column).getLien()==Liens.VIDE)){
+                    gameWin=false;
+                } else {
+                    //On compte le nombre de symboles
+                    if(grid.getCase(row, column).getSymbole()!=Symboles.VIDE){
+                        nbSymboles++;
+                    }
+                }
+                row++;
+            }
+            column++;
+        }
+        //on vérifie qu'il y a autant de chemins que de paires de symboles
+        if(gameWin){
+            if(pathList.size()!=nbSymboles/2){
+                gameWin=false;
+            }
+        }
+        
+        return gameWin;
     }
 
 }

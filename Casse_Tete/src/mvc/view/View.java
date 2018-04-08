@@ -70,7 +70,7 @@ public class View extends Application {
 
         Text affichage = new Text(TITLE);
         affichage.setFont(Font.font("Verdana", 30));
-        affichage.setFill(Color.LIGHTGRAY);
+        affichage.setFill(Color.DARKGRAY);
         border.setTop(affichage);
 
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
@@ -127,6 +127,9 @@ public class View extends Application {
                     //appel fonction dans controller pour vérifier victoire :
                         //vérif toute cases avec des liens
                         //vérif nb_chemin = nb_symboles/2
+                if(m.victory(grid, LARGEUR_GRID, LONGUEUR_GRID)){
+                    affichage.setText("Victoire !");
+                }
             }
         });
 
