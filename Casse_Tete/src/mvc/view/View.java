@@ -11,15 +11,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.Event;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -32,7 +28,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 
 import javafx.scene.text.Font;
@@ -73,7 +68,7 @@ public class View extends Application {
 
         Grille grid = new Grille(LARGEUR_GRID, LONGUEUR_GRID);
         numLevel=m.nextLevel(grid);
-        //Text[][] tabText = new Text[LARGEUR_GRID][LONGUEUR_GRID];
+        
        ImageView[][] imgView = new ImageView[LARGEUR_GRID][LARGEUR_GRID];
 
         Text affichage = new Text("Niveau "+numLevel);
@@ -94,13 +89,13 @@ public class View extends Application {
                 if(arg instanceof Boolean){
                     inStopDD = (boolean) arg;
                 }
-                System.out.println("MAJ : " + arg);
+                
                 //MAJ des liens
                 for (int column = 0; column < LARGEUR_GRID; column++) {
                     for (int row = 0; row < LONGUEUR_GRID; row++) {
                         if(grid.getCase(row, column).getSymbole()==Symboles.VIDE){
                             cellLink = grid.getCase(row, column).getLien();
-                            //System.out.println(grid.getCase(row, column) + " - " + cellLink);
+                            
                             linkPath = Liens.VIDE.getImgPath();
                             try{
                                 switch(cellLink){
@@ -186,10 +181,6 @@ public class View extends Application {
                 final int fColumn = column;
                 final int fRow = row;
 
-                //final Text t = new Text(" " + column + "-" + row + " ");
-                /*final Text t = new Text(grid.getCase(row, column).toString());
-                tabText[column][row] = t;
-                t.setFont(Font.font("Verdana", 25));*/
                 //creation de la grille d'images
                 final ImageView imV;
                 symbolPath = grid.getCase(row, column).getSymbole().getImgPath();
