@@ -24,9 +24,10 @@ import mvc.model.enumeration.Symboles;
  * @author fred (base), modifié par Jérémy
  */
 public class Controller extends Observable {
-    Hashtable<Symboles,Chemin> pathList;
-    int lastC, lastR;
-    Symboles lastSymb;
+    private Hashtable<Symboles,Chemin> pathList;
+    private int lastC, lastR;
+    private Symboles lastSymb;
+    private int lastLevel;
 
     /**
      * Constructeur.
@@ -34,6 +35,7 @@ public class Controller extends Observable {
     public Controller() {
         this.pathList = new Hashtable<Symboles,Chemin>();
         lastSymb = Symboles.VIDE;
+        lastLevel = 0;
     }
     
     /**
@@ -68,7 +70,7 @@ public class Controller extends Observable {
         }
         
         setChanged();
-        notifyObservers();
+        notifyObservers(false);
     }
     
     /**
@@ -105,7 +107,7 @@ public class Controller extends Observable {
         }
         
         setChanged();
-        notifyObservers();
+        notifyObservers(true);
     }
     
     /**
@@ -181,7 +183,7 @@ public class Controller extends Observable {
         
         System.out.println("parcoursDD : " + r + "-" + c + " Symbole : " + cell.getSymbole());
         setChanged();
-        notifyObservers();
+        notifyObservers(false);
     }
    
     /**
@@ -229,6 +231,66 @@ public class Controller extends Observable {
         }
         
         return gameWin;
+    }
+    
+    public int nextLevel(Grille grid){
+        grid.setGrilleVide();
+        pathList.clear();
+        
+        switch(this.lastLevel){
+            case 1:
+                grid.getCase(0, 0).setSymbole(Symboles.COW);
+                grid.getCase(4, 2).setSymbole(Symboles.COW);
+                grid.getCase(0, 4).setSymbole(Symboles.LEAF);
+                grid.getCase(4, 3).setSymbole(Symboles.LEAF);
+                break;
+            case 2:
+                grid.getCase(0, 0).setSymbole(Symboles.COW);
+                grid.getCase(4, 0).setSymbole(Symboles.COW);
+                grid.getCase(1, 0).setSymbole(Symboles.CAT);
+                grid.getCase(3, 3).setSymbole(Symboles.CAT);
+                break;
+            case 3:
+                grid.getCase(4, 0).setSymbole(Symboles.COW);
+                grid.getCase(2, 2).setSymbole(Symboles.COW);
+                grid.getCase(4, 1).setSymbole(Symboles.CAT);
+                grid.getCase(3, 3).setSymbole(Symboles.CAT);
+                break;
+            case 4:
+                grid.getCase(0, 0).setSymbole(Symboles.COW);
+                grid.getCase(3, 2).setSymbole(Symboles.COW);
+                grid.getCase(2, 2).setSymbole(Symboles.LEAF);
+                grid.getCase(3, 3).setSymbole(Symboles.LEAF);
+                grid.getCase(1, 0).setSymbole(Symboles.PINE);
+                grid.getCase(4, 0).setSymbole(Symboles.PINE);
+                break;
+            case 5:
+                grid.getCase(0, 0).setSymbole(Symboles.COW);
+                grid.getCase(0, 4).setSymbole(Symboles.COW);
+                grid.getCase(4, 0).setSymbole(Symboles.LEAF);
+                grid.getCase(2, 3).setSymbole(Symboles.LEAF);
+                grid.getCase(2, 2).setSymbole(Symboles.PINE);
+                grid.getCase(3, 3).setSymbole(Symboles.PINE);
+                grid.getCase(4, 1).setSymbole(Symboles.CAT);
+                grid.getCase(1, 4).setSymbole(Symboles.CAT);
+                break;
+            default:
+                grid.getCase(0, 0).setSymbole(Symboles.COW);
+                grid.getCase(4, 2).setSymbole(Symboles.COW);
+                break;
+        }
+        
+        this.lastLevel++;
+        if(this.lastLevel>5){
+            this.lastLevel=0;
+        }
+        
+        return this.lastLevel;
+    }
+    
+    public void actualize(){
+        setChanged();
+        notifyObservers(false);
     }
 
 }

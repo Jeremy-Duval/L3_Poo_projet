@@ -5,6 +5,7 @@
  */
 package mvc.model;
 
+import java.util.Iterator;
 import mvc.model.enumeration.Liens;
 import mvc.model.enumeration.Symboles;
 
@@ -31,8 +32,6 @@ public class Grille {
                 _contenu[i][j] = new Case(i,j);
             }
         }
-        _contenu[0][0].setSymbole(Symboles.COW);
-        _contenu[4][2].setSymbole(Symboles.COW);
     }
 
     /**
@@ -96,5 +95,23 @@ public class Grille {
             column++;
         }
         return isFull;
+    }
+    
+    /**
+     * Reinitialise la grille à vide (efface les Symboles et les Liens).
+     */
+    public void setGrilleVide(){
+        int column, row;
+        
+        column = 0;
+        while(column < _largeur){
+            row = 0;
+            while(row < _hauteur){
+                _contenu[row][column].setLien(Liens.VIDE);
+                _contenu[row][column].setSymbole(Symboles.VIDE);
+                row++;
+            }
+            column++;
+        }
     }
 }

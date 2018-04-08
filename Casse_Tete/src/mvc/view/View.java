@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.Event;
@@ -47,7 +49,7 @@ public class View extends Application {
     private static final int LONGUEUR_GRID = 5;
     private static final int SIZE_CELL = 100;
     private static final String TITLE = "Chat-pin et feuille de vache";
-
+    private int numLevel;
     Controller m;
 
     @Override
@@ -65,10 +67,11 @@ public class View extends Application {
         GridPane gPane = new GridPane();
 
         Grille grid = new Grille(LARGEUR_GRID, LONGUEUR_GRID);
+        numLevel=m.nextLevel(grid);
         //Text[][] tabText = new Text[LARGEUR_GRID][LONGUEUR_GRID];
        ImageView[][] imgView = new ImageView[LARGEUR_GRID][LARGEUR_GRID];
 
-        Text affichage = new Text(TITLE);
+        Text affichage = new Text("Niveau "+numLevel);
         affichage.setFont(Font.font("Verdana", 30));
         affichage.setFill(Color.DARKGRAY);
         border.setTop(affichage);
@@ -79,9 +82,14 @@ public class View extends Application {
             @Override
             public void update(Observable o, Object arg) {
                 Liens cellLink;
+                Symboles cellSymb;
                 String linkPath;
+                boolean inStopDD = false;
                 
-                System.out.println("MAJ");
+                if(arg instanceof Boolean){
+                    inStopDD = (boolean) arg;
+                }
+                System.out.println("MAJ : " + arg);
                 //MAJ des liens
                 for (int column = 0; column < LARGEUR_GRID; column++) {
                     for (int row = 0; row < LONGUEUR_GRID; row++) {
@@ -123,13 +131,46 @@ public class View extends Application {
                     }
                 }//end FOR
                 
-                //TODO :
-                    //appel fonction dans controller pour vérifier victoire :
-                        //vérif toute cases avec des liens
-                        //vérif nb_chemin = nb_symboles/2
-                if(m.victory(grid, LARGEUR_GRID, LONGUEUR_GRID)){
-                    affichage.setText("Victoire !");
-                }
+                if((inStopDD)&&(m.victory(grid, LARGEUR_GRID, LONGUEUR_GRID))){
+                    affichage.setText(affichage+" Victoire !");
+                    
+                    numLevel=m.nextLevel(grid);
+                    affichage.setText("Niveau "+numLevel);
+                    //actualisation des images
+                    for (int column = 0; column < LARGEUR_GRID; column++) {
+                        for (int row = 0; row < LONGUEUR_GRID; row++) {
+                            if(grid.getCase(row, column).getSymbole()!=Symboles.VIDE){
+                                cellSymb = grid.getCase(row, column).getSymbole();
+                                linkPath = Symboles.VIDE.getImgPath();
+                                try{
+                                    switch(cellSymb){
+                                        case CAT :
+                                            linkPath = Symboles.CAT.getImgPath();
+                                            break;
+                                        case COW :
+                                            linkPath = Symboles.COW.getImgPath();
+                                            break;
+                                        case LEAF :
+                                            linkPath = Symboles.LEAF.getImgPath();
+                                            break;
+                                        case PINE :
+                                            linkPath = Symboles.PINE.getImgPath();
+                                            break;
+                                        default:
+                                            break;
+
+                                    }
+                                    Image imgLink = new Image(new FileInputStream(linkPath));
+                                    imgView[column][row].setImage(imgLink);
+                                    ((ImageView)gPane.getChildren().get(column*LONGUEUR_GRID+row)).setImage(imgLink);
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                            }//end if
+                        }
+                    }//end FOR
+                    m.actualize();
+                }//end if traitement victoire
             }
         });
 
@@ -198,6 +239,7 @@ public class View extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
 
     /**
      * @param args the command line arguments
