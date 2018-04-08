@@ -5,10 +5,8 @@
  */
 package mvc.controller;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Set;
@@ -48,7 +46,6 @@ public class Controller extends Observable {
         ListIterator<Chemin> it;
         boolean registered;
         
-        System.out.println("startDD : " + r + "-" + c + " Symbole : " + cell.getSymbole());
         //On test si le symbole de la case en paramètre n'est pas déjà dans un chemin
         registered = false;
         Set keys = pathList.keySet();
@@ -66,7 +63,6 @@ public class Controller extends Observable {
             lastSymb=cell.getSymbole();
             lastC = c;
             lastR = r;
-            System.out.println("Key : "+cell.getSymbole());
         }
         
         setChanged();
@@ -82,7 +78,6 @@ public class Controller extends Observable {
         Chemin chemin;
         Case lastCell;
         // mémoriser le dernier objet renvoyé par parcoursDD pour connaitre la case de relachement
-        System.out.println("stopDD : " + r + "-" + c + " -> " + lastR + "-" + lastC);
         
         //si l'on s'arrête sur une case vide, de mauvais symbole, ou sur la case d'origine : on supprime le chemin
         chemin = pathList.get(lastSymb);
@@ -90,20 +85,6 @@ public class Controller extends Observable {
         if((lastCell.getSymbole()==Symboles.VIDE)||(lastCell.getSymbole()!=lastSymb)||(lastCell==chemin.get(0))){
             this.reInitPathLink(chemin);
             pathList.remove(lastSymb);
-            System.out.println("Erase");
-        }
-        
-        //******************Test : affichage de toutes les cases de tout les chemins********************
-        Set keys = pathList.keySet();
-        Iterator itr = keys.iterator();
-        while((itr.hasNext())){
-            Symboles symb = (Symboles) itr.next();
-            Chemin ch = pathList.get(symb);
-            System.out.println("Chemin "+symb+" : ");
-            Iterator itr2 = ch.iterator();
-            while (itr2.hasNext()) {
-                System.out.println(itr2.next());
-            }
         }
         
         setChanged();
@@ -181,7 +162,6 @@ public class Controller extends Observable {
             }
         }
         
-        System.out.println("parcoursDD : " + r + "-" + c + " Symbole : " + cell.getSymbole());
         setChanged();
         notifyObservers(false);
     }
