@@ -73,7 +73,7 @@ public class View extends Application {
 
         Text affichage = new Text("Niveau "+numLevel);
         affichage.setFont(Font.font("Verdana", 30));
-        affichage.setFill(Color.DARKGRAY);
+        affichage.setFill(Color.BLACK);
         border.setTop(affichage);
 
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
