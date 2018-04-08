@@ -6,6 +6,7 @@
  */
 package mvc.view;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Observable;
@@ -29,6 +30,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 
 import javafx.scene.text.Font;
@@ -36,6 +40,7 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import mvc.controller.Controller;
 import mvc.model.Grille;
+import mvc.model.enumeration.Audios;
 import mvc.model.enumeration.Liens;
 import mvc.model.enumeration.Symboles;
 
@@ -132,7 +137,8 @@ public class View extends Application {
                 }//end FOR
                 
                 if((inStopDD)&&(m.victory(grid, LARGEUR_GRID, LONGUEUR_GRID))){
-                    affichage.setText(affichage+" Victoire !");
+                    playAudio(Audios.VICTORY, false);
+                    affichage.setText(affichage.getText()+" Victoire !");
                     
                     numLevel=m.nextLevel(grid);
                     affichage.setText("Niveau "+numLevel);
@@ -231,20 +237,37 @@ public class View extends Application {
         gPane.setGridLinesVisible(true);
         
         border.setCenter(gPane);
-
+        
         Scene scene = new Scene(border, Color.CORAL);
 
         primaryStage.setTitle(TITLE);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+        
     }
-
+    
+    private static void playAudio(Audios audio, boolean loop){
+        Media pick = new Media(new File(audio.getSoundPath()).toURI().toString());
+        MediaPlayer player = new MediaPlayer(pick);
+        
+        if(loop){
+            player.setCycleCount(MediaPlayer.INDEFINITE);
+        }
+        
+        player.play();
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //ajout de la musique
+        Media pick = new Media(new File(Audios.MUSIC.getSoundPath()).toURI().toString());
+        MediaPlayer player = new MediaPlayer(pick);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.play();
+        //lancement de l'appli
         launch(args);
     }
 
