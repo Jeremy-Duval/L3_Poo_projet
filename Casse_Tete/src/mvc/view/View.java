@@ -15,7 +15,10 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -62,6 +65,7 @@ public class View extends Application {
 
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
         BorderPane border = new BorderPane();
+        BorderPane borderTop = new BorderPane();
 
         // permet de placer les diffrents boutons dans une grille
         GridPane gPane = new GridPane();
@@ -74,8 +78,19 @@ public class View extends Application {
         Text affichage = new Text("Niveau "+numLevel);
         affichage.setFont(Font.font("Verdana", 30));
         affichage.setFill(Color.BLACK);
-        border.setTop(affichage);
-
+        borderTop.setLeft(affichage);
+        
+        Button resetButton = new Button("Recommencer");
+        resetButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                m.reinitMap();
+            }
+        });
+        borderTop.setRight(resetButton);
+        borderTop.setPadding(new Insets(10, 10, 0, 0));
+        
+        border.setTop(borderTop);
+        
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
         m.addObserver(new Observer() {
 
@@ -228,9 +243,9 @@ public class View extends Application {
         gPane.setGridLinesVisible(true);
         
         border.setCenter(gPane);
-        
+        border.setPadding(new Insets(0, 0, 0, 10));
         Scene scene = new Scene(border, Color.CORAL);
-
+        
         primaryStage.setTitle(TITLE);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);

@@ -269,6 +269,18 @@ public class Controller extends Observable {
         return this.lastLevel;
     }
     
+    public void reinitMap(){
+        Set keys = pathList.keySet();
+        Iterator itr = keys.iterator();
+        while((itr.hasNext())){
+            Symboles symb = (Symboles) itr.next();
+            Chemin ch = pathList.get(symb);
+            this.reInitPathLink(ch);
+        } 
+        pathList.clear();
+        this.actualize();
+    }
+    
     public void actualize(){
         setChanged();
         notifyObservers(false);
