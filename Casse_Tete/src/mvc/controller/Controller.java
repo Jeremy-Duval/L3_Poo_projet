@@ -246,6 +246,22 @@ public class Controller extends Observable {
                 break;
             case 5:
                 grid.getCase(0, 0).setSymbole(Symboles.COW);
+                grid.getCase(1, 3).setSymbole(Symboles.COW);
+                grid.getCase(2, 2).setSymbole(Symboles.CAT);
+                grid.getCase(4, 4).setSymbole(Symboles.CAT);
+                grid.getCase(1, 0).setSymbole(Symboles.PINE);
+                grid.getCase(4, 3).setSymbole(Symboles.PINE);
+                break;
+            case 6:
+                grid.getCase(0, 0).setSymbole(Symboles.COW);
+                grid.getCase(2, 1).setSymbole(Symboles.COW);
+                grid.getCase(1, 2).setSymbole(Symboles.LEAF);
+                grid.getCase(4, 4).setSymbole(Symboles.LEAF);
+                grid.getCase(3, 1).setSymbole(Symboles.CAT);
+                grid.getCase(0, 4).setSymbole(Symboles.CAT);
+                break;
+            case 7:
+                grid.getCase(0, 0).setSymbole(Symboles.COW);
                 grid.getCase(0, 4).setSymbole(Symboles.COW);
                 grid.getCase(4, 0).setSymbole(Symboles.LEAF);
                 grid.getCase(2, 3).setSymbole(Symboles.LEAF);
@@ -261,12 +277,24 @@ public class Controller extends Observable {
         }
         
         this.lastLevel++;
-        if(this.lastLevel>5){
+        if(this.lastLevel>7){
             this.lastLevel=0;
-            return 6;
+            return 7;
         }
         
         return this.lastLevel;
+    }
+    
+    public void reinitMap(){
+        Set keys = pathList.keySet();
+        Iterator itr = keys.iterator();
+        while((itr.hasNext())){
+            Symboles symb = (Symboles) itr.next();
+            Chemin ch = pathList.get(symb);
+            this.reInitPathLink(ch);
+        } 
+        pathList.clear();
+        this.actualize();
     }
     
     public void actualize(){
