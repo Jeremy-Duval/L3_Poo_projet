@@ -16,7 +16,6 @@ import static javafx.application.Application.launch;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -55,6 +54,13 @@ public class View extends Application {
     private int numLevel;
     Controller m;
 
+    /**
+     * Fonction principale de la vue.
+     *
+     * @param primaryStage Stage : l'application
+     * @throws FileNotFoundException Exception soulevée si une image n'a pas
+     * étée trouvée
+     */
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         String symbolPath;
@@ -71,16 +77,16 @@ public class View extends Application {
         GridPane gPane = new GridPane();
 
         Grille grid = new Grille(LARGEUR_GRID, LONGUEUR_GRID);
-        numLevel=m.nextLevel(grid);
-        
-       ImageView[][] imgView = new ImageView[LARGEUR_GRID][LARGEUR_GRID];
+        numLevel = m.nextLevel(grid);
 
-        Text affichage = new Text("Niveau "+numLevel);
+        ImageView[][] imgView = new ImageView[LARGEUR_GRID][LARGEUR_GRID];
+
+        Text affichage = new Text("Niveau " + numLevel);
         affichage.setFont(Font.font("Verdana", 30));
         affichage.setFill(Color.BLACK);
         borderTop.setLeft(affichage);
-        
-        Button resetButton = new Button("Recommencer");
+
+        Button resetButton = new Button("  Effacer  ");
         resetButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 m.reinitMap();
@@ -88,9 +94,9 @@ public class View extends Application {
         });
         borderTop.setRight(resetButton);
         borderTop.setPadding(new Insets(10, 10, 0, 0));
-        
+
         border.setTop(borderTop);
-        
+
         // la vue observe les "update" du modèle, et réalise les mises à jour graphiques
         m.addObserver(new Observer() {
 
@@ -100,36 +106,36 @@ public class View extends Application {
                 Symboles cellSymb;
                 String linkPath;
                 boolean inStopDD = false;
-                
-                if(arg instanceof Boolean){
+
+                if (arg instanceof Boolean) {
                     inStopDD = (boolean) arg;
                 }
-                
+
                 //MAJ des liens
                 for (int column = 0; column < LARGEUR_GRID; column++) {
                     for (int row = 0; row < LONGUEUR_GRID; row++) {
-                        if(grid.getCase(row, column).getSymbole()==Symboles.VIDE){
+                        if (grid.getCase(row, column).getSymbole() == Symboles.VIDE) {
                             cellLink = grid.getCase(row, column).getLien();
-                            
+
                             linkPath = Liens.VIDE.getImgPath();
-                            try{
-                                switch(cellLink){
-                                    case ANGLE_INF_DROIT :
+                            try {
+                                switch (cellLink) {
+                                    case ANGLE_INF_DROIT:
                                         linkPath = Liens.ANGLE_INF_DROIT.getImgPath();
                                         break;
-                                    case ANGLE_INF_GAUCHE :
+                                    case ANGLE_INF_GAUCHE:
                                         linkPath = Liens.ANGLE_INF_GAUCHE.getImgPath();
                                         break;
-                                    case ANGLE_SUP_DROIT :
+                                    case ANGLE_SUP_DROIT:
                                         linkPath = Liens.ANGLE_SUP_DROIT.getImgPath();
                                         break;
-                                    case ANGLE_SUP_GAUCHE :
+                                    case ANGLE_SUP_GAUCHE:
                                         linkPath = Liens.ANGLE_SUP_GAUCHE.getImgPath();
                                         break;
-                                    case HORIZONTAL :
+                                    case HORIZONTAL:
                                         linkPath = Liens.HORIZONTAL.getImgPath();
                                         break;
-                                    case VERTICAL :
+                                    case VERTICAL:
                                         linkPath = Liens.VERTICAL.getImgPath();
                                         break;
                                     default:
@@ -138,38 +144,38 @@ public class View extends Application {
                                 }
                                 Image imgLink = new Image(new FileInputStream(linkPath));
                                 imgView[column][row].setImage(imgLink);
-                                ((ImageView)gPane.getChildren().get(column*LONGUEUR_GRID+row)).setImage(imgLink);
+                                ((ImageView) gPane.getChildren().get(column * LONGUEUR_GRID + row)).setImage(imgLink);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
                         }//end if
                     }
                 }//end FOR
-                
-                if((inStopDD)&&(m.victory(grid, LARGEUR_GRID, LONGUEUR_GRID))){
+
+                if ((inStopDD) && (m.victory(grid, LARGEUR_GRID, LONGUEUR_GRID))) {
                     playAudio(Audios.VICTORY, false);
-                    affichage.setText(affichage.getText()+" Victoire !");
-                    
-                    numLevel=m.nextLevel(grid);
-                    affichage.setText("Niveau "+numLevel);
+                    affichage.setText(affichage.getText() + " Victoire !");
+
+                    numLevel = m.nextLevel(grid);
+                    affichage.setText("Niveau " + numLevel);
                     //actualisation des images
                     for (int column = 0; column < LARGEUR_GRID; column++) {
                         for (int row = 0; row < LONGUEUR_GRID; row++) {
-                            if(grid.getCase(row, column).getSymbole()!=Symboles.VIDE){
+                            if (grid.getCase(row, column).getSymbole() != Symboles.VIDE) {
                                 cellSymb = grid.getCase(row, column).getSymbole();
                                 linkPath = Symboles.VIDE.getImgPath();
-                                try{
-                                    switch(cellSymb){
-                                        case CAT :
+                                try {
+                                    switch (cellSymb) {
+                                        case CAT:
                                             linkPath = Symboles.CAT.getImgPath();
                                             break;
-                                        case COW :
+                                        case COW:
                                             linkPath = Symboles.COW.getImgPath();
                                             break;
-                                        case LEAF :
+                                        case LEAF:
                                             linkPath = Symboles.LEAF.getImgPath();
                                             break;
-                                        case PINE :
+                                        case PINE:
                                             linkPath = Symboles.PINE.getImgPath();
                                             break;
                                         default:
@@ -178,7 +184,7 @@ public class View extends Application {
                                     }
                                     Image imgLink = new Image(new FileInputStream(linkPath));
                                     imgView[column][row].setImage(imgLink);
-                                    ((ImageView)gPane.getChildren().get(column*LONGUEUR_GRID+row)).setImage(imgLink);
+                                    ((ImageView) gPane.getChildren().get(column * LONGUEUR_GRID + row)).setImage(imgLink);
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
@@ -199,18 +205,18 @@ public class View extends Application {
                 //creation de la grille d'images
                 final ImageView imV;
                 symbolPath = grid.getCase(row, column).getSymbole().getImgPath();
-                
+
                 //creation du symbole 
                 imgSymbol = new Image(new FileInputStream(symbolPath));
                 imV = new ImageView(imgSymbol);
-               
+
                 imV.setFitHeight(SIZE_CELL);
                 imV.setFitWidth(SIZE_CELL);
                 imgView[column][row] = imV;
-                
+
                 imV.setOnDragDetected(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent event) {
-                        if(grid.getCase(fRow, fColumn).getSymbole()!=Symboles.VIDE){
+                        if (grid.getCase(fRow, fColumn).getSymbole() != Symboles.VIDE) {
                             Dragboard db = imV.startDragAndDrop(TransferMode.MOVE);
                             ClipboardContent content = new ClipboardContent();
                             content.putString(""); // non utilisé actuellement
@@ -239,28 +245,28 @@ public class View extends Application {
                 gPane.add(imgView[column][row], column, row);
             }
         }
-        
+
         gPane.setGridLinesVisible(true);
-        
+
         border.setCenter(gPane);
         border.setPadding(new Insets(0, 0, 0, 10));
         Scene scene = new Scene(border, Color.CORAL);
-        
+
         primaryStage.setTitle(TITLE);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-        
+
     }
-    
-    private static void playAudio(Audios audio, boolean loop){
+
+    private static void playAudio(Audios audio, boolean loop) {
         Media pick = new Media(new File(audio.getSoundPath()).toURI().toString());
         MediaPlayer player = new MediaPlayer(pick);
-        
-        if(loop){
+
+        if (loop) {
             player.setCycleCount(MediaPlayer.INDEFINITE);
         }
-        
+
         player.play();
     }
 

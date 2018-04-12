@@ -6,6 +6,7 @@
 package mvc.model.enumeration;
 
 /**
+ * Enumération des images correspondant aux différents liens.
  *
  * @author jeremy
  */
@@ -17,17 +18,22 @@ public enum Liens {
     ANGLE_INF_GAUCHE("assets/img/liens/l_agb.png"),
     ANGLE_SUP_DROIT("assets/img/liens/l_adh.png"),
     ANGLE_SUP_GAUCHE("assets/img/liens/l_agh.png");
-    
+
     private String imgPath = "";
 
     /**
      * Constructeur.
+     *
      * @param path String : path contenu dans le symbole
      */
     Liens(String path) {
         this.imgPath = path;
     }
 
+    /**
+     *
+     * @return String : le chemin de l'image correspondant au lien.
+     */
     public String getImgPath() {
         return this.imgPath;
     }
