@@ -296,9 +296,9 @@ public class Controller extends Observable {
         }
 
         this.lastLevel++;
-        if (this.lastLevel > 7) {
+        if (this.lastLevel > 8) {
             this.lastLevel = 0;
-            return 7;
+            return 8;
         }
 
         return this.lastLevel;
