@@ -258,7 +258,12 @@ public class View extends Application {
         primaryStage.show();
 
     }
-
+    
+    /**
+     * Lance un fichier audio.
+     * @param audio Audios : énumération correspondante au fichier audio
+     * @param loop boolean : True si l'audio doit être joué en boucle, False sinon
+     */
     private static void playAudio(Audios audio, boolean loop) {
         Media pick = new Media(new File(audio.getSoundPath()).toURI().toString());
         MediaPlayer player = new MediaPlayer(pick);
