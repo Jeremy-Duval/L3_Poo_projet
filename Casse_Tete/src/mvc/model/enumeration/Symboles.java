@@ -6,6 +6,7 @@
 package mvc.model.enumeration;
 
 /**
+ * Enumération des images correspondant aux différents symboles à relier.
  *
  * @author jeremy
  */
@@ -20,12 +21,17 @@ public enum Symboles {
 
     /**
      * Constructeur.
+     *
      * @param path String : path contenu dans le symbole
      */
     Symboles(String path) {
         this.imgPath = path;
     }
 
+    /**
+     *
+     * @return String : le chemin de l'image correspondant au symbole.
+     */
     public String getImgPath() {
         return this.imgPath;
     }
